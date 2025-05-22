@@ -1,0 +1,24 @@
+{% load static %}
+{% include "_categorias.html" %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ produto.nome }}</title>
+    <link rel="stylesheet" href="{% static 'produto_list.css' %}">
+</head>
+<body>
+    <div style="max-width:600px;margin:40px auto;background:#fff;padding:32px;border-radius:12px;box-shadow:0 2px 12px rgba(14,165,233,0.13);">
+        <h2>{{ produto.nome }}</h2>
+        {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" style="width:220px;height:220px;object-fit:cover;border-radius:10px;">
+        {% endif %}
+        <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+        <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+        <p><strong>Estoque:</strong> {{ produto.quantidade }}</p>
+        <p><strong>Categoria:</strong> {{ produto.categoria }}</p>
+        <a href="{% url 'produto_list' %}">Voltar para lista</a>
+    </div>
+</body>
+</html>

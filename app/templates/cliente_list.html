@@ -1,0 +1,69 @@
+{% load static %}
+{% include "_categorias.html" %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="{% static 'produto_list.css' %}">
+    <style>
+    .cliente-actions button, .cliente-actions a {
+        margin-right: 6px;
+        background: #0ea5e9;
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .cliente-actions button:hover, .cliente-actions a:hover {
+        background: #0369a1;
+    }
+    </style>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <a href="{% url 'cliente_create' %}">Novo Cliente</a>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Ações</th>
+        </tr>
+        {% for c in clientes %}
+        <tr>
+            <td>{{ c.username }}</td>
+            <td>{{ c.email }}</td>
+            <td>{{ c.telefone }}</td>
+            <td>{{ c.cidade }}</td>
+            <td>{{ c.estado }}</td>
+            <td class="cliente-actions">
+                {% if request.user.id == c.pk %}
+                    <a href="{% url 'perfil_cliente' c.pk %}">Perfil</a>
+                {% else %}
+                    <a href="{% url 'perfil_cliente' c.pk %}" onclick="alert('Você só pode acessar seu próprio perfil!'); return false;">Perfil</a>
+                {% endif %}
+                <a href="{% url 'cliente_edit' c.pk %}">Editar</a>
+                <a href="{% url 'cliente_delete' c.pk %}">Excluir</a>
+                <form action="{% url 'cliente_login_instant' c.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Entrar</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhum cliente cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

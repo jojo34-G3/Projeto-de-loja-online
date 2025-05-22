@@ -1,0 +1,19 @@
+{% load static %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Novo Cliente</title>
+    <link rel="stylesheet" href="{% static 'produto_form.css' %}">
+</head>
+<body>
+    <h1>Novo Cliente</h1>
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+        <a href="{% url 'cliente_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>

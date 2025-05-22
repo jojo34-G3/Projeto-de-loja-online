@@ -1,0 +1,146 @@
+{% load static %}
+{% include "_categorias.html" %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ofertas Magalu</title>
+    <link rel="stylesheet" href="{% static 'produto_list.css' %}">
+    <style>
+    body {
+        background: #f8fafc;
+    }
+    .magalu-banner {
+        background: linear-gradient(90deg, #0ea5e9 60%, #38bdf8 100%);
+        color: #fff;
+        text-align: center;
+        padding: 36px 0 24px 0;
+        font-size: 2.2em;
+        font-weight: bold;
+        letter-spacing: 1px;
+        border-radius: 0 0 36px 36px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 12px rgba(14,165,233,0.09);
+    }
+    .magalu-ofertas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 32px;
+        margin: 0 auto 60px auto;
+        max-width: 1200px;
+        padding: 0 16px;
+    }
+    .magalu-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(14,165,233,0.13);
+        padding: 28px 18px 22px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.18s, box-shadow 0.18s;
+        position: relative;
+        border: 2px solid #e0e7ef;
+        min-height: 420px;
+    }
+    .magalu-card:hover {
+        transform: translateY(-8px) scale(1.04);
+        box-shadow: 0 8px 32px rgba(14,165,233,0.18);
+        border-color: #0ea5e9;
+        z-index: 2;
+    }
+    .magalu-card img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 8px rgba(14,165,233,0.10);
+        background: #f1f5f9;
+    }
+    .magalu-nome {
+        color: #0ea5e9;
+        font-weight: bold;
+        font-size: 1.18em;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+    .magalu-descricao {
+        color: #334155;
+        font-size: 1em;
+        margin-bottom: 8px;
+        text-align: center;
+        min-height: 40px;
+    }
+    .magalu-preco {
+        color: #ea580c;
+        font-weight: bold;
+        font-size: 1.25em;
+        margin-bottom: 6px;
+    }
+    .magalu-promocao {
+        background: #facc15;
+        color: #b45309;
+        font-weight: bold;
+        font-size: 1em;
+        border-radius: 8px;
+        padding: 4px 14px;
+        display: inline-block;
+        margin-bottom: 8px;
+        margin-top: 2px;
+        letter-spacing: 1px;
+    }
+    .magalu-estoque {
+        color: #2563eb;
+        font-size: 0.97em;
+        margin-bottom: 2px;
+    }
+    .magalu-btn {
+        background: #0ea5e9;
+        color: #fff;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        margin-top: 16px;
+        transition: background 0.2s;
+        font-weight: bold;
+        box-shadow: 0 1px 6px rgba(14,165,233,0.10);
+    }
+    .magalu-btn:hover {
+        background: #0369a1;
+    }
+    </style>
+</head>
+<body>
+    <div class="magalu-banner">
+        Ofertas imperdíveis Magalu<br>
+        <span style="font-size:0.7em;font-weight:400;">Aproveite descontos exclusivos e condições especiais!</span>
+    </div>
+    <div class="magalu-ofertas-grid">
+        {% for p in produtos %}
+        <div class="magalu-card">
+            {% if p.imagem %}
+                <img src="{{ p.imagem.url }}">
+            {% else %}
+                <img src="{% static 'default_produto.png' %}">
+            {% endif %}
+            <div class="magalu-nome">{{ p.nome }}</div>
+            <div class="magalu-descricao">{{ p.descricao|truncatechars:60 }}</div>
+            <div class="magalu-preco">R$ {{ p.preco }}</div>
+            <div class="magalu-estoque">Estoque: {{ p.quantidade }}</div>
+            <div class="magalu-estoque">Categoria: {{ p.categoria }}</div>
+            <div class="magalu-promocao">Oferta exclusiva Magalu!</div>
+            <button class="magalu-btn" onclick="window.location.href='{% url 'produto_detail' p.pk %}'">Ver Produto</button>
+        </div>
+        {% empty %}
+        <div class="magalu-card">
+            <img src="{% static 'default_produto.png' %}">
+            <div class="magalu-nome">Nenhum produto em oferta</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

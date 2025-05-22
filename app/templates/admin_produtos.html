@@ -1,0 +1,103 @@
+{% load static %}
+{% include "_categorias.html" %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Administração de Produtos</title>
+    <link rel="stylesheet" href="{% static 'produto_list.css' %}">
+    <style>
+    .admin-produtos-table th, .admin-produtos-table td {
+        padding: 10px 14px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: left;
+    }
+    .admin-produtos-table th {
+        background: #0ea5e9;
+        color: #fff;
+    }
+    .admin-produtos-table img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 1px 6px rgba(14,165,233,0.10);
+    }
+    .admin-actions a, .admin-actions button {
+        margin-right: 6px;
+        background: #0ea5e9;
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .admin-actions a:hover, .admin-actions button:hover {
+        background: #0369a1;
+    }
+    </style>
+</head>
+<body>
+    <h1>Administração de Produtos</h1>
+    <a href="{% url 'produto_create' %}">Novo Produto</a>
+    <table class="admin-produtos-table" border="1">
+        <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Promoção</th>
+            <th>Estoque</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+        </tr>
+        {% for p in produtos %}
+        <tr>
+            <td>
+                {% if p.imagem %}
+                    <img src="{{ p.imagem.url }}">
+                {% else %}
+                    <img src="{% static 'default_produto.png' %}">
+                {% endif %}
+            </td>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.descricao|truncatechars:60 }}</td>
+            <td>R$ {{ p.preco }}</td>
+            <td>
+                {% if p.preco < 100 %}
+                    <span style="color:#ea580c;font-weight:bold;">Promoção!</span>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ p.quantidade }}</td>
+            <td>{{ p.categoria }}</td>
+            <td class="admin-actions">
+                <a href="{% url 'produto_update' p.pk %}">Editar</a>
+                <a href="{% url 'produto_delete' p.pk %}">Excluir</a>
+                {% if p.oferta_magalu %}
+                    <form action="{% url 'remover_oferta_magalu' p.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Remover Oferta Magalu</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'adicionar_oferta_magalu' p.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Adicionar Oferta Magalu</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhum produto cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% load static %}
+<style>
+.menu-bar {
+    background: #0ea5e9;
+    padding: 0;
+    margin: 0 0 30px 0;
+    border-bottom: 4px solid #0369a1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.menu-bar li {
+    margin: 0;
+}
+.menu-bar a {
+    display: block;
+    padding: 18px 28px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-right: 1px solid #0369a1;
+    transition: background 0.2s;
+}
+.menu-bar a:last-child {
+    border-right: none;
+}
+.menu-bar a:hover {
+    background: #0369a1;
+}
+.menu-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+}
+.menu-profile-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-left: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    cursor: pointer;
+}
+.menu-profile-name {
+    color: #fff;
+    margin-left: 8px;
+    font-weight: 500;
+}
+</style>
+<nav class="menu-bar">
+    <ul>
+        <li><a href="{% url 'produto_list' %}">🏠 Início</a></li>
+        <li><a href="{% url 'produto_list' %}">🛒 Produtos</a></li>
+        <li><a href="{% url 'produto_create' %}">➕ Cadastrar Produto</a></li>
+        <li><a href="{% url 'cliente_list' %}">👥 Clientes</a></li>
+        <li><a href="{% url 'cliente_create' %}">➕ Cadastrar Cliente</a></li>
+        <li><a href="{% url 'logout' %}">🚪 Logout</a></li>
+    </ul>
+    <div class="menu-profile">
+        <span class="menu-profile-name">{{ request.user.username }}</span>
+        {% if cliente_logado %}
+            <a href="{% url 'perfil_cliente' cliente_logado.pk %}">
+                {% if cliente_logado.imagem %}
+                    <img src="{{ cliente_logado.imagem.url }}" class="menu-profile-img" alt="Perfil">
+                {% else %}
+                    <img src="{% static 'default_profile.png' %}" class="menu-profile-img" alt="Perfil">
+                {% endif %}
+            </a>
+        {% endif %}
+    </div>
+</nav>

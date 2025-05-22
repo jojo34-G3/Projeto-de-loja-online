@@ -1,0 +1,87 @@
+body {
+    background: #f8fafc;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.perfil-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(14,165,233,0.10);
+    padding: 32px 36px;
+}
+.perfil-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e0e7ef;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+}
+.perfil-img img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0ea5e9;
+    box-shadow: 0 2px 8px rgba(14,165,233,0.10);
+}
+.perfil-info {
+    margin-left: 32px;
+}
+.perfil-info h2 {
+    margin: 0 0 12px 0;
+    color: #0ea5e9;
+}
+.perfil-info p {
+    margin: 4px 0;
+    color: #334155;
+}
+.perfil-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.tab-btn {
+    background: #e0e7ef;
+    color: #0ea5e9;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 6px 6px 0 0;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+.tab-btn.active, .tab-btn:hover {
+    background: #0ea5e9;
+    color: #fff;
+}
+.tab-content {
+    display: none;
+    background: #f1f5f9;
+    border-radius: 0 0 8px 8px;
+    padding: 18px 24px;
+}
+.tab-content.active {
+    display: block;
+}
+.tab-content ul {
+    list-style: none;
+    padding: 0;
+}
+.tab-content li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 8px 14px;
+    box-shadow: 0 1px 4px rgba(14,165,233,0.05);
+}
+.tab-content img {
+    margin-right: 14px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(14,165,233,0.10);
+}

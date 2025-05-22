@@ -1,0 +1,88 @@
+{% load static %}
+{% include "_categorias.html" %}
+{% include "_menu.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="{% static 'produto_list.css' %}">
+    <style>
+    .produto-thumb {
+        position: relative;
+        display: inline-block;
+    }
+    .produto-thumb img {
+        transition: box-shadow 0.2s;
+        cursor: pointer;
+    }
+    .produto-thumb .zoom-img {
+        display: none;
+        position: absolute;
+        top: -10px;
+        left: 60px;
+        z-index: 10;
+        width: 220px;
+        height: 220px;
+        border-radius: 10px;
+        box-shadow: 0 4px 24px rgba(14,165,233,0.18);
+        background: #fff;
+        border: 2px solid #0ea5e9;
+    }
+    .produto-thumb:hover .zoom-img {
+        display: block;
+    }
+    </style>
+</head>
+<body>
+    <h1>Produtos</h1>
+    <a href="{% url 'produto_create' %}">Novo Produto</a>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Imagem</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+        </tr>
+        {% for p in produtos %}
+        <tr>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.descricao }}</td>
+            <td>{{ p.preco }}</td>
+            <td>{{ p.quantidade }}</td>
+            <td>
+                {% if p.imagem %}
+                <div class="produto-thumb">
+                    <img src="{{ p.imagem.url }}" width="50" height="50">
+                    <img src="{{ p.imagem.url }}" class="zoom-img" alt="Zoom">
+                </div>
+                {% else %}
+                    Sem imagem
+                {% endif %}
+            </td>
+            <td>{{ p.categoria }}</td>
+            <td>
+                <a href="{% url 'produto_update' p.pk %}">Editar</a> |
+                <a href="{% url 'produto_delete' p.pk %}">Deletar</a>
+                <form action="{% url 'comprar_produto' p.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Comprar</button>
+                </form>
+                <form action="{% url 'favoritar_produto' p.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">⭐</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">Nenhum produto cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'login' %}">Voltar ao início</a>
+</body>
+</html>

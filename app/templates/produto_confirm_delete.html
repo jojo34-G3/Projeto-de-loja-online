@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Deletar Produto</title>
+    <link rel="stylesheet" href="{% static 'produto_confirm_delete.css' %}">
+</head>
+<body>
+    <h1>Deletar Produto</h1>
+    <p>Tem certeza que deseja deletar "{{ produto.nome }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'produto_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>
